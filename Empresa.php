@@ -80,9 +80,9 @@
         public function __toString(){
             $cadena="Denominacion:". $this->getDenominacion().
                     "\nDireccion: ".$this->getDireccion().
-                    "\nColeccion Motos:\n".$this->colMotos()."\n".
-                    "\nColeccion Clientes:\n".$this->colClientes() .
-                    "\nColeccion Ventas Realizada:\n".$this->colVentasHechas();
+                    "\nCOLECCION DE MOTOS:\n".$this->colMotos()."\n".
+                    "\nCOLECCION DE CLIENTES:\n".$this->colClientes() .
+                    "\nCOLECCION DE VENTAS HECHAS:\n".$this->colVentasHechas();
             return $cadena;
         }
 
@@ -101,45 +101,38 @@
 
 
         public function registrarVenta($colCodigos, $objCliente){
-            $i=0;
             $encontrado=false;
             $ventas=[];
-            $colecMotos=$this->getColeccionMotos(); 
+            $colecMotos=[]; 
             $importeFinal=0;
             $numero=1;
             $fecha=date("y-m-d");
-            $nuevaVenta=new Venta($numero, $fecha, $objCliente, $colecMotos, 0);
+
             if(count($colCodigos)>0){
-                while($i<count($colCodigos) && $encontrado==false){
-                    $objMoto=$this->retornarMoto($colCodigos[$i]);
-                    if($objMoto!=null && $objMoto->getActiva() && $objCliente->getEstaDadoDeBaja() == false){
-                        $nuevaVenta->incorporarMoto($objMoto);
-                        $i=count($ventas);
-                        $ventas[$i]=$nuevaVenta;
-                        $importeFinal=$objMoto->darPrecioVenta();
-                        
+                if($objCliente->getEstaDadoDeBaja() == false){
+                  foreach ($colCodigos as $unCodigo) {
+                    $objMoto=$this->retornarMoto($unCodigo);
+                    if($objMoto!= null  ){
+                         $nuevaVenta=new Venta($numero, $fecha, $objCliente, $colecMotos, 0);
+                       if( $nuevaVenta->incorporarMoto($objMoto)){
+                           $i=count($ventas);
+                           $ventas[$i]=$nuevaVenta;
+                           $importeFinal+=$nuevaVenta->getPrecioFinal();
+                           $this->setColeccionVentasRealizadas($ventas);
+                       }
+                           
                     }
-                    $i++;
+                    
+                  }  
                 }
-            }
-            else{
-                while($i<count($colCodigos) && $encontrado==false){
-                    $objMoto=$this->retornarMoto($colCodigos[$i]);
-                    if($objMoto!=null && $objMoto->getActiva() && $objCliente->getEstaDadoDeBaja() == false){
-                        $nuevaVenta->incorporarMoto($objMoto);
-                        $i=count($ventas);
-                        $ventas[$i]=$nuevaVenta;
-                        $importeFinal=$objMoto->darPrecioVenta();
-                    }
-                    $i++;
-                }
-            }
-            if($importeFinal>0){
-                $this->setColeccionVentasRealizadas($ventas);
                 
             }
-            return $importeFinal;
+                    
+           return $importeFinal;     
         }
+ 
+            
+        
         /*Implementar el método informarSumaVentasNacionales() que recorre la colección de ventas realizadas por la empresa y retorna
          el importe total de ventas Nacionales realizadas por la empresa. */
         public  function  informarSumaVentasNacionales(){
@@ -156,6 +149,7 @@
             $coleVentaImportadas=[];
 
             foreach($this->getColeccionVentasRealizadas() as $venta){
+
                 $i=count($coleVentaImportadas);
                 $coleVentaImportadas[$i]=$venta->retornarMotosImportadas();
             }

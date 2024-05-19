@@ -86,7 +86,7 @@ include_once "MotoNacionales.php";
         public function retornarMotosImportadas(){
             $colMotosImportada=[];
             foreach($this->getColeccionMotos() as  $unaMoto){
-                if($unaMoto->getTipo() == "importada" && $unaMoto->getActiva()){
+                if($unaMoto->getTipo() == "importada" ){
                     $i=count($colMotosImportada);
                     $colMotosImportada[$i]=$unaMoto;
                 }
@@ -97,8 +97,9 @@ include_once "MotoNacionales.php";
 
         public function incorporarMoto($objMoto){
             $nuevcolec=[];
+            $i=count($nuevcolec);
             if(($objMoto->getActiva()) && ($this->getObjCliente()->getEstaDadoDeBaja()== false)){
-                $i=count($nuevcolec);
+                $incorporar=true; 
                 $nuevcolec[$i]=$objMoto;
                 $precio=$objMoto->darPrecioVenta();
                 $this->setColeccionMotos($nuevcolec);
@@ -107,9 +108,9 @@ include_once "MotoNacionales.php";
                 $objMoto->setActiva($activa);
             }
             else{
-                $colMotos=0;
-                $precio=0;
+                $incorporar=false;
             }
+            return $incorporar;
               
         }
     }

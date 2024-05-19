@@ -23,9 +23,48 @@
     $colCliente=[$objCliente1,$objCliente2];
     $objEmpresa=new Empresa("Alta Gama", "Av.argentina 123", $colMotos , $colCliente, $colVentaHechas );
 
+    
     echo "___________________resgistar venta______________________________\n";
     $colCodigo=[11,12,13,14];
     $precioFinal=$objEmpresa->registrarVenta($colCodigo, $objCliente2);
     if($precioFinal!=0){
-        echo "venta hecha\n";
+        echo "VENTA HECHA\n Precio Final $".$precioFinal."\n";
+        echo $objEmpresa."\n";
     }
+    else{
+        echo "venta no hecha\n";
+    }
+    echo "___________________resgistar ventaNR2______________________________\n";
+    $colCodigo=[13,14];
+    $precioFinal=$objEmpresa->registrarVenta($colCodigo, $objCliente2);
+    if($precioFinal!=0){
+        echo "VENTA HECHA\nPrecio Final $".$precioFinal."\n";
+        echo $objEmpresa."\n";
+    }
+    else{
+        echo "venta no hecha\n";
+        
+    }
+    echo "___________________resgistar ventaNR3______________________________\n";
+    $colCodigo=[14,2];
+    $precioFinal=$objEmpresa->registrarVenta($colCodigo, $objCliente2);
+    if($precioFinal!=0){
+        echo "VENTA HECHA\n Precio Final $".$precioFinal."\n";
+        echo $objEmpresa."\n";
+    }
+    else{
+        echo "venta no hecha\n";
+        
+    }
+
+   echo "___________________Informar Sumatoria de las ventas nacionales______________________________\n";
+   $sumatoria=$objEmpresa->informarSumaVentasNacionales();
+   echo "La Sumatoria de las ventas nacionales hechas es de $".$sumatoria."\n";
+   echo "___________________Informar Ventas importadas______________________________\n";
+   $colecVentas=$objEmpresa->informarVentasImportadas();
+  if( count($colecVentas) >0){
+   echo "al menos 1 venta se realizo\n";
+  }
+  else{
+   echo "no se realizaron Ventas\n";
+  }
