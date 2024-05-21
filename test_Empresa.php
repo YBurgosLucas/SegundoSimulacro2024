@@ -27,9 +27,9 @@
     echo "___________________resgistar venta______________________________\n";
     $colCodigo=[11,12,13,14];
     $precioFinal=$objEmpresa->registrarVenta($colCodigo, $objCliente2);
-    if($precioFinal!=0){
+    if($precioFinal>0){
         echo "VENTA HECHA\n Precio Final $".$precioFinal."\n";
-        echo $objEmpresa."\n";
+        
     }
     else{
         echo "venta no hecha\n";
@@ -37,9 +37,9 @@
     echo "___________________resgistar ventaNR2______________________________\n";
     $colCodigo=[13,14];
     $precioFinal=$objEmpresa->registrarVenta($colCodigo, $objCliente2);
-    if($precioFinal!=0){
+    if($precioFinal >0){
         echo "VENTA HECHA\nPrecio Final $".$precioFinal."\n";
-        echo $objEmpresa."\n";
+        
     }
     else{
         echo "venta no hecha\n";
@@ -48,9 +48,9 @@
     echo "___________________resgistar ventaNR3______________________________\n";
     $colCodigo=[14,2];
     $precioFinal=$objEmpresa->registrarVenta($colCodigo, $objCliente2);
-    if($precioFinal!=0){
-        echo "VENTA HECHA\n Precio Final $".$precioFinal."\n";
-        echo $objEmpresa."\n";
+    if($precioFinal>0){
+     echo "VENTA HECHA ". $precioFinal."\n";
+    
     }
     else{
         echo "venta no hecha\n";
@@ -68,3 +68,4 @@
   else{
    echo "no se realizaron Ventas\n";
   }
+  echo $objEmpresa;

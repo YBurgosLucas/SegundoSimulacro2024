@@ -102,28 +102,36 @@
 
         public function registrarVenta($colCodigos, $objCliente){
             $encontrado=false;
-            $ventas=[];
+            $ventas=$this->getColeccionVentasRealizadas();
             $colecMotos=[]; 
             $importeFinal=0;
-            $numero=1;
+            $numeroV=count($this->getColeccionVentasRealizadas())+1;
             $fecha=date("y-m-d");
-
+            $respuesta=false;
+            $nuevaVenta=new Venta($numeroV, $fecha, $objCliente, $colecMotos, 0);
             if(count($colCodigos)>0){
+            
                 if($objCliente->getEstaDadoDeBaja() == false){
                   foreach ($colCodigos as $unCodigo) {
                     $objMoto=$this->retornarMoto($unCodigo);
                     if($objMoto!= null  ){
-                         $nuevaVenta=new Venta($numero, $fecha, $objCliente, $colecMotos, 0);
-                       if( $nuevaVenta->incorporarMoto($objMoto)){
-                           $i=count($ventas);
-                           $ventas[$i]=$nuevaVenta;
-                           $importeFinal+=$nuevaVenta->getPrecioFinal();
-                           $this->setColeccionVentasRealizadas($ventas);
+                         $importe=$nuevaVenta->incorporarMoto($objMoto);
+                       if($importe>0 ){
+                           $respuesta=true;                          
+                           $importeFinal+=$importe;
+                           
                        }
                            
                     }
                     
                   }  
+                  if($respuesta){
+                    $i=count($ventas);
+                    $ventas[$i]=$nuevaVenta; 
+                    $this->setColeccionVentasRealizadas($ventas);
+                    $nuevaVenta->setPrecioFinal($importeFinal);
+                }
+                 
                 }
                 
             }
