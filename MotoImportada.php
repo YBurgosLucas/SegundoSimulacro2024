@@ -4,8 +4,8 @@ include_once "Moto.php";
         private $pais;
         private $impuesto;
 
-        public function __construct($cdg, $precio, $anioF, $descrip, $porIA, $activo, $tipo, $pais, $impuesto){
-            parent::__construct($cdg, $precio, $anioF, $descrip, $porIA, $activo, $tipo);
+        public function __construct($cdg, $precio, $anioF, $descrip, $porIA, $activo, $pais, $impuesto){
+            parent::__construct($cdg, $precio, $anioF, $descrip, $porIA, $activo);
             $this->pais=$pais;
             $this->impuesto=$impuesto;
 

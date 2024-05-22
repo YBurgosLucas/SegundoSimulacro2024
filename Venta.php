@@ -69,13 +69,10 @@
          precio venta de cada una de las motos Nacionales vinculadas a la venta. */
         public function retornarTotalVentaNacional(){
             $precioFinal=0;
-            
-            foreach($this->getColeccionMotos() as $unaMoto){
-                if( $unaMoto->getTipo() == "nacional" ){
-
-                        $unaMoto->setActiva(true);
+            $colMoto=$this->getColeccionMotos();
+            foreach($colMoto as $unaMoto){
+                if( $unaMoto instanceof MotoNacionales ){
                         $precioFinal+=$unaMoto->darPrecioVenta();
-                        $unaMoto->setActiva(false);
                 }
             }
 
@@ -85,10 +82,10 @@
         a la venta. Si la venta solo se corresponde con motos Nacionales la colección retornada debe ser vacía. */
         public function retornarMotosImportadas(){
             $colMotosImportada=[];
-            foreach($this->getColeccionMotos() as  $unaMoto){
-                if($unaMoto->getTipo() == "importada" ){
-                    $i=count($colMotosImportada);
-                    $colMotosImportada[$i]=$unaMoto;
+            $colMoto=$this->getColeccionMotos();
+            foreach($colMoto as  $unaMoto){
+                if($unaMoto instanceof MotoImportada ){
+                    $colMotosImportada[]=$unaMoto;
                 }
             }
             return $colMotosImportada;
@@ -105,7 +102,6 @@
                 $precio=$objMoto->darPrecioVenta();
                 $precioFinal+=$precio;
                 $this->setPrecioFinal($precioFinal);
-                $objMoto->setActiva(false);
                 $respuesta=true;
             } 
             else{

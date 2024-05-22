@@ -3,9 +3,9 @@
     class MotoNacionales extends Moto{
         private $porcentajeDescuento;
 
-        public function __construct($cdg, $precio, $anioF, $descrip, $porIA, $activo, $tipo, $porcentajeDescuento){
-            parent::__construct($cdg, $precio, $anioF, $descrip, $porIA, $activo, $tipo);
-            $this->porcentajeDescuento=$porcentajeDescuento;
+        public function __construct($cdg, $precio, $anioF, $descrip, $porIA, $activo, $porcentajeDescuento){
+            parent::__construct($cdg, $precio, $anioF, $descrip, $porIA, $activo);
+            $this->porcentajeDescuento=$porcentajeDescuento ?? 15;
         }
         public function getPorcentajeDescuento(){
             return $this->porcentajeDescuento;
@@ -21,11 +21,8 @@
         public function darPrecioVenta(){
             $_venta=parent::darPrecioVenta();
             if($_venta!=-1){
-                $_precioVenta=$_venta-(($_venta*$this->getPorcentajeDescuento())/100);
+                $_venta=$_venta-(($_venta*$this->getPorcentajeDescuento())/100);
             }
-            else{
-                $_precioVenta=$_venta;
-            }
-            return $_precioVenta;
+            return $_venta;
         }
     }

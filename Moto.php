@@ -6,16 +6,16 @@
         private $descripcion;
         private $porIncrAnual;
         private $activa;
-        private $tipo;
+        
     
-        public function __construct($cdg, $precio, $anioF, $descrip, $porIA, $activo, $tipo){
+        public function __construct($cdg, $precio, $anioF, $descrip, $porIA, $activo){
             $this->codigo=$cdg;
             $this->costo=$precio;
             $this->anioFabricacion=$anioF;
             $this->descripcion=$descrip;
             $this->porIncrAnual=$porIA;
             $this->activa=$activo;
-            $this->tipo=$tipo;   //no supe como resolverlo de otra forma 
+           
         }
     
         //metodos de acceso get
@@ -37,9 +37,7 @@
         public function getActiva(){
             return $this->activa;
         }
-        public function getTipo(){
-            return $this->tipo;
-        }
+
         // metodos de acceso set
         public function setCodigo($cdg){
             $this->codigo=$cdg;
@@ -59,9 +57,7 @@
         public function setActiva($activo){
             $this->activa=$activo;
         }
-        public function setTipo($tipo){
-            $this->tipo=$tipo;
-        }
+
     
         public function __tostring(){
             $cad="Codigo: ".$this->getCodigo().
@@ -69,8 +65,7 @@
                 "\nAnio Fabricacion: ".$this->getAnioFabricacion().
                 "\nDescripcion: ".$this->getDescripcion().
                 "\nPorcentaje Incremento Anual: ".$this->getPorIncrAnual()."%".
-                "\nEstado Moto: ".$this->getActiva().
-                "\nTipo:".$this->getTipo();
+                "\nEstado Moto: ".$this->getActiva();
             
             return $cad;
         }

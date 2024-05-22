@@ -101,7 +101,7 @@
 
 
         public function registrarVenta($colCodigos, $objCliente){
-            $encontrado=false;
+            
             $ventas=$this->getColeccionVentasRealizadas();
             $colecMotos=[]; 
             $importeFinal=0;
@@ -111,7 +111,6 @@
             $nuevaVenta=new Venta($numeroV, $fecha, $objCliente, $colecMotos, 0);
             if(count($colCodigos)>0){
                 if($objCliente->getEstaDadoDeBaja() == false){
-                     
                   foreach ($colCodigos as $unCodigo) {
                     $objMoto=$this->retornarMoto($unCodigo);
                     if($objMoto!= null  ){
@@ -122,12 +121,11 @@
                     $i=count($ventas);
                     $ventas[$i]=$nuevaVenta; 
                     $this->setColeccionVentasRealizadas($ventas);
-                    $importeFinal=$nuevaVenta->getPrecioFinal();
-
                   }
 
                 }
                 }
+               $importeFinal=$nuevaVenta->getPrecioFinal(); 
               return $importeFinal;       
             }
                     
@@ -135,7 +133,8 @@
          el importe total de ventas Nacionales realizadas por la empresa. */
         public  function  informarSumaVentasNacionales(){
             $precioFinal=0;
-            foreach ($this->getColeccionVentasRealizadas() as $unaVenta){
+            $colVentas=$this->getColeccionVentasRealizadas();
+            foreach ($colVentas as $unaVenta){
                 $precioFinal+=$unaVenta->retornarTotalVentaNacional();
             }
             return $precioFinal;
@@ -145,11 +144,11 @@
         colección de ventas de motos  importadas. Si en la venta al menos una de las motos es importada la venta debe ser informada. */
         public function informarVentasImportadas(){
             $coleVentaImportadas=[];
-
-            foreach($this->getColeccionVentasRealizadas() as $venta){
+            $colVentas=$this->getColeccionVentasRealizadas();
+            foreach( $colVentas as $venta){
                 if(count($venta->retornarMotosImportadas())>0){
-                $i=count($coleVentaImportadas);
-                $coleVentaImportadas[$i]=$venta->retornarMotosImportadas();            
+                
+                $coleVentaImportadas[]=$venta;            
                 }
          
             }
