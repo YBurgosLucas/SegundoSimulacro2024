@@ -21,7 +21,7 @@
         public function darPrecioVenta(){
             $_venta=parent::darPrecioVenta();
             if($_venta!=-1){
-                $_precioVenta=$_venta-($_venta*$this->getPorcentajeDescuento()/100);
+                $_precioVenta=$_venta-(($_venta*$this->getPorcentajeDescuento())/100);
             }
             else{
                 $_precioVenta=$_venta;

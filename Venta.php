@@ -1,6 +1,5 @@
 <?php
-include_once "MotoImportada.php";
-include_once "MotoNacionales.php";
+
     
         class Venta{
             private $numero;
@@ -63,7 +62,7 @@ include_once "MotoNacionales.php";
                      "\nFecha: ".$this->getFecha().
                      "\nReferenciaCliente:".$this->getObjCliente().
                      "\nColeccion de moto: ".$this->colMotos().
-                     "Precio Final: $".$this->getPrecioFinal();
+                     "\nPrecio Final: $".$this->getPrecioFinal();
                 return $cad;
             }
         /*Implementar el método retornarTotalVentaNacional() que retorna  la sumatoria del
@@ -98,22 +97,21 @@ include_once "MotoNacionales.php";
 
         public function incorporarMoto($objMoto){
             $nuevcolec=$this->getColeccionMotos();
-            $precio=$objMoto->darPrecioVenta();
-
-            if($precio!=0){
-                 $i=count($nuevcolec);
+            if($objMoto->getActiva() ){
+                $i=count($nuevcolec);
                 $nuevcolec[$i]=$objMoto;
-                $incorporar=$precio+$this->getPrecioFinal();
                 $this->setColeccionMotos($nuevcolec);
-                $activa=false;
-                $objMoto->setActiva($activa);
-                $this->setPrecioFinal($incorporar);
-            }
+                $precioFinal=$this->getPrecioFinal();
+                $precio=$objMoto->darPrecioVenta();
+                $precioFinal+=$precio;
+                $this->setPrecioFinal($precioFinal);
+                $objMoto->setActiva(false);
+                $respuesta=true;
+            } 
             else{
-                $incorporar=-1;
+                $respuesta=false;
             }
-            return $incorporar;
-              
+            return $respuesta;
         }
     }
 

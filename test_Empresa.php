@@ -17,7 +17,7 @@
 
     //$cdg, $precio, $anioF, $descrip, $porIA, $activo,$pais,$impuesto
     $objMoto4=new MotoImportada(14, 12499900, 2020, "PitBike Enduro Motocross Apollo Aiii 190cc Plr", 100, true, "importada", "Francia", 6244400);
-
+   
     $colMotos=[$objMoto1, $objMoto2, $objMoto3, $objMoto4];
     $colVentaHechas=[];
     $colCliente=[$objCliente1,$objCliente2];
@@ -29,7 +29,6 @@
     $precioFinal=$objEmpresa->registrarVenta($colCodigo, $objCliente2);
     if($precioFinal>0){
         echo "VENTA HECHA\n Precio Final $".$precioFinal."\n";
-        
     }
     else{
         echo "venta no hecha\n";
@@ -49,7 +48,7 @@
     $colCodigo=[14,2];
     $precioFinal=$objEmpresa->registrarVenta($colCodigo, $objCliente2);
     if($precioFinal>0){
-     echo "VENTA HECHA ". $precioFinal."\n";
+        echo "VENTA HECHA\nPrecio Final $".$precioFinal."\n";
     
     }
     else{
@@ -57,7 +56,7 @@
         
     }
 
-   echo "___________________Informar Sumatoria de las ventas nacionales______________________________\n";
+   echo "___________________Informar Sumatoria de las ventas nacionales_____________\n";
    $sumatoria=$objEmpresa->informarSumaVentasNacionales();
    echo "La Sumatoria de las ventas nacionales hechas es de $".$sumatoria."\n";
    echo "___________________Informar Ventas importadas______________________________\n";
@@ -68,4 +67,5 @@
   else{
    echo "no se realizaron Ventas\n";
   }
+  echo "_______________________Empresa______________________________________________\n";
   echo $objEmpresa;

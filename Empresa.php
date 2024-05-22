@@ -110,37 +110,27 @@
             $respuesta=false;
             $nuevaVenta=new Venta($numeroV, $fecha, $objCliente, $colecMotos, 0);
             if(count($colCodigos)>0){
-            
                 if($objCliente->getEstaDadoDeBaja() == false){
+                     
                   foreach ($colCodigos as $unCodigo) {
                     $objMoto=$this->retornarMoto($unCodigo);
                     if($objMoto!= null  ){
-                         $importe=$nuevaVenta->incorporarMoto($objMoto);
-                       if($importe>0 ){
-                           $respuesta=true;                          
-                           $importeFinal+=$importe;
-                           
-                       }
-                           
-                    }
-                    
+                           $respuesta=$nuevaVenta->incorporarMoto($objMoto);        
+                    } 
                   }  
                   if($respuesta){
                     $i=count($ventas);
                     $ventas[$i]=$nuevaVenta; 
                     $this->setColeccionVentasRealizadas($ventas);
-                    $nuevaVenta->setPrecioFinal($importeFinal);
+                    $importeFinal=$nuevaVenta->getPrecioFinal();
+
+                  }
+
                 }
-                 
                 }
-                
+              return $importeFinal;       
             }
                     
-           return $importeFinal;     
-        }
- 
-            
-        
         /*Implementar el método informarSumaVentasNacionales() que recorre la colección de ventas realizadas por la empresa y retorna
          el importe total de ventas Nacionales realizadas por la empresa. */
         public  function  informarSumaVentasNacionales(){
@@ -157,9 +147,11 @@
             $coleVentaImportadas=[];
 
             foreach($this->getColeccionVentasRealizadas() as $venta){
-
+                if(count($venta->retornarMotosImportadas())>0){
                 $i=count($coleVentaImportadas);
-                $coleVentaImportadas[$i]=$venta->retornarMotosImportadas();
+                $coleVentaImportadas[$i]=$venta->retornarMotosImportadas();            
+                }
+         
             }
             return $coleVentaImportadas;
         }

@@ -15,7 +15,7 @@
             $this->descripcion=$descrip;
             $this->porIncrAnual=$porIA;
             $this->activa=$activo;
-            $this->tipo=$tipo;
+            $this->tipo=$tipo;   //no supe como resolverlo de otra forma 
         }
     
         //metodos de acceso get
